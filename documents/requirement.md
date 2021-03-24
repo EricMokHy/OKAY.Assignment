@@ -1,6 +1,7 @@
 # Tech Stack
-ASP.NET MVC
-ASP.NET Identity Framework
+.NET 5  
+ASP.NET Core MVC  
+ASP.NET Identity Framework  
 SQL Server
 
 ## Test Environment
@@ -80,4 +81,4 @@ TransactionDate | dateTime | not null, default `getdate()`
 - this logic apply to [Property List Page](#property-list-page), [Property Detail Page](#propert-detail-page), [Transaction List Page](#transaction-list-page) and [Transaction Detial Page](#transaction-detail-page).
 - user can view, list, edit or delete property or transaction which is belong to him.
 - admin user can view, list, edit or delete property or transaction for all owner.
-- redirect to [Error Page](#error-page) if user is attempt to visit unauthorized resource.
+- throw exception if user is attempt to visit unauthorized resource.
