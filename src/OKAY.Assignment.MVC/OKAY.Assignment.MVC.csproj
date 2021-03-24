@@ -29,7 +29,6 @@
     <Folder Include="Areas\Transactions\Data\" />
     <Folder Include="Areas\Transactions\Models\" />
     <Folder Include="Areas\Transactions\Views\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
