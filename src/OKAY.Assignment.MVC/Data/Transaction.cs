@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OKAY.Assignment.MVC.Entities
+namespace OKAY.Assignment.MVC.Data
 {
     public class Transaction
     {

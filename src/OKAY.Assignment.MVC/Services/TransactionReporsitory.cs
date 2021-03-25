@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using OKAY.Assignment.MVC.Data;
 using Microsoft.AspNetCore.Http;
 using System.Linq.Expressions;
-using OKAY.Assignment.MVC.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace OKAY.Assignment.MVC.Services

@@ -1,4 +1,4 @@
-﻿using OKAY.Assignment.MVC.Entities;
+﻿using OKAY.Assignment.MVC.Data;
 using System;
 using System.Collections.Generic;
 

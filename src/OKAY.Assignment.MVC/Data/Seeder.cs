@@ -6,13 +6,15 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
-namespace OKAY.Assignment.MVC.Entities
+namespace OKAY.Assignment.MVC.Data
 {
     public static class Seeder
     {
         static readonly string adminEmail = "admin@example.com";
         static readonly string userEmail = "user@example.com";
+        private static Random rnd = new Random(100);
 
         public static async Task SeedTransactions(this ApplicationDbContext context)
         {
@@ -37,6 +39,52 @@ namespace OKAY.Assignment.MVC.Entities
             
             await context.Database.ExecuteSqlRawAsync(command, adminParameter, userParameter);
 
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedTransactionsForSQLite(this ApplicationDbContext context)
+        {
+            var admin = await context.GetUserAsync(true);
+            var user = await context.GetUserAsync(false);
+
+            context.Transactions.AddRange(new List<Transaction>()
+            {
+                new Transaction(){userId=admin, propertyId = 1, TransactionDate = RandomDate() },
+                new Transaction(){userId=admin, propertyId = 3, TransactionDate = RandomDate() },
+                new Transaction(){userId=admin, propertyId = 7, TransactionDate = RandomDate() },
+                new Transaction(){userId=admin, propertyId = 9, TransactionDate = RandomDate() },
+                new Transaction(){userId=user, propertyId = 7, TransactionDate = RandomDate() },
+                new Transaction(){userId=user, propertyId = 8, TransactionDate = RandomDate() },
+                new Transaction(){userId=user, propertyId = 8, TransactionDate = RandomDate() },
+            });
+            await context.SaveChangesAsync();
+        }
+
+        private static DateTime RandomDate()
+        {
+            var result = DateTime.Now.AddDays(rnd.Next(30));
+            return result;
+        }
+
+
+        public static async Task SeedPropertiesForSQLite(this ApplicationDbContext context)
+        {
+            var admin = await context.GetUserAsync(true);
+            var user = await context.GetUserAsync(false);
+
+            context.Properties.AddRange(new List<Property>
+            {
+                new Property(){name = "Property belog to admin 1", bedroom = 1, isAvailable = true, leasePrice = 10000, createdDate = DateTime.Now, updatedDate = DateTime.Now, userId = admin },
+                new Property(){name = "Property belog to admin 2", bedroom = 2, isAvailable = true, leasePrice = 20000, createdDate = DateTime.Now, updatedDate = DateTime.Now, userId = admin },
+                new Property(){name = "Property belog to admin 3", bedroom = 3, isAvailable = true, leasePrice = 30000, createdDate = DateTime.Now, updatedDate = DateTime.Now, userId = admin },
+                new Property(){name = "Property belog to admin 4", bedroom = 4, isAvailable = true, leasePrice = 40000, createdDate = DateTime.Now, updatedDate = DateTime.Now, userId = admin },
+                new Property(){name = "Property belog to admin 5", bedroom = 5, isAvailable = true, leasePrice = 50000, createdDate = DateTime.Now, updatedDate = DateTime.Now, userId = admin },
+                new Property(){name = "Property belog to user 1", bedroom = 1, isAvailable = true, leasePrice = 10000, createdDate = DateTime.Now, updatedDate = DateTime.Now, userId = user },
+                new Property(){name = "Property belog to user 2", bedroom = 2, isAvailable = true, leasePrice = 20000, createdDate = DateTime.Now, updatedDate = DateTime.Now, userId = user },
+                new Property(){name = "Property belog to user 3", bedroom = 3, isAvailable = true, leasePrice = 30000, createdDate = DateTime.Now, updatedDate = DateTime.Now, userId = user },
+                new Property(){name = "Property belog to user 4", bedroom = 4, isAvailable = true, leasePrice = 40000, createdDate = DateTime.Now, updatedDate = DateTime.Now, userId = user },
+                new Property(){name = "Property belog to user 5", bedroom = 5, isAvailable = true, leasePrice = 50000, createdDate = DateTime.Now, updatedDate = DateTime.Now, userId = user },
+            });
             await context.SaveChangesAsync();
         }
 
@@ -77,7 +125,7 @@ namespace OKAY.Assignment.MVC.Entities
         public static async Task SeedIdentity(this ApplicationDbContext context, UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager)
         {
-            var r = roleManager.FindByNameAsync(IdentityRolesNames.Administrator);
+            var r = await roleManager.FindByNameAsync(IdentityRolesNames.Administrator);
             if (r == null)
             {
                 await roleManager.CreateAsync(new ApplicationRole(IdentityRolesNames.Administrator));
@@ -107,7 +155,7 @@ namespace OKAY.Assignment.MVC.Entities
                 await userManager.CreateAsync(user, "P@ssw0rd");
                 if (roles.Count() > 0)
                 {
-                    await userManager.AddToRolesAsync(exist, roles);
+                    await userManager.AddToRolesAsync(user, roles);
                 }
             }
         }

@@ -1,7 +1,6 @@
 ﻿using OKAY.Assignment.MVC.Data;
 using System;
 using Microsoft.AspNetCore.Http;
-using OKAY.Assignment.MVC.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using OKAY.Assignment.MVC.Constraints;
@@ -18,7 +17,8 @@ namespace OKAY.Assignment.MVC.Services
             user = accessor.HttpContext.User;
         }
 
-        internal bool isAdminUser { get => user.IsInRole(IdentityRolesNames.Administrator); }
+        internal bool isAdminUser {
+            get => user.HasClaim(Constraints.ClaimTypes.Role, IdentityRolesNames.Administrator); }
         internal Guid userId { 
             get
             {

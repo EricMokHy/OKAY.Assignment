@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using OKAY.Assignment.MVC.Data;
-using OKAY.Assignment.MVC.Entities;
 using OKAY.Assignment.MVC.Models;
 using System;
 using System.Collections.Generic;
@@ -67,7 +66,7 @@ namespace OKAY.Assignment.MVC.Services
         public async Task<PaginatedBase<PropertyViewModel>> FindAsync(string keyword, int pageIndex, int pageSize, string order, string direction)
         {
             string[] supportedOrder = new string[] { "name", "bedroom", "leaseprice", "createddate", "updateddate", "owner" };
-            var o = order.ToLower();
+            var o = string.IsNullOrEmpty(order) ? "" : order.ToLower();
             if (!supportedOrder.Contains(o)) o = supportedOrder[0];
 
             var d= direction.ToLower();
