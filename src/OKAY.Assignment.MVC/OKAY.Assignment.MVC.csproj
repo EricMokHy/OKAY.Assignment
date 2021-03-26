@@ -23,14 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Properties\Controllers\" />
     <Folder Include="Areas\Properties\Data\" />
     <Folder Include="Areas\Properties\Models\" />
-    <Folder Include="Areas\Properties\Views\" />
-    <Folder Include="Areas\Transactions\Controllers\" />
     <Folder Include="Areas\Transactions\Data\" />
     <Folder Include="Areas\Transactions\Models\" />
-    <Folder Include="Areas\Transactions\Views\" />
   </ItemGroup>
 
 </Project>

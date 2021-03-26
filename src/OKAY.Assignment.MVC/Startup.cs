@@ -12,6 +12,7 @@ using OKAY.Assignment.MVC.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OKAY.Assignment.MVC.Services;
 
 namespace OKAY.Assignment.MVC
 {
@@ -37,6 +38,9 @@ namespace OKAY.Assignment.MVC
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             
             services.AddRazorPages();
+
+            services.AddScoped<IPropertyRepository, PropertyRepository>();
+            services.AddScoped<ITransactionReporsitory, TransactionReporsitory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +68,12 @@ namespace OKAY.Assignment.MVC
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "Properties",
+                    pattern: "{area:exists}/{controller=Property}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "Transactions",
+                    pattern: "{area:exists}/{controller=Transactions}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using OKAY.Assignment.MVC.Models;
 
 namespace OKAY.Assignment.MVC.Data
 {
@@ -60,5 +61,9 @@ namespace OKAY.Assignment.MVC.Data
             context.SeedProperties().GetAwaiter().GetResult();
             context.SeedTransactions().GetAwaiter().GetResult();
         }
+
+        public DbSet<OKAY.Assignment.MVC.Models.PropertyViewModel> PropertyViewModel { get; set; }
+
+        public DbSet<OKAY.Assignment.MVC.Models.TransactionViewModel> TransactionViewModel { get; set; }
     }
 }
